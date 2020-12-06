@@ -1,0 +1,16 @@
+curl 'https://www.r114.com/?c=memul&m=p10&direct=A' \
+  -H 'Connection: keep-alive' \
+  -H 'Pragma: no-cache' \
+  -H 'Cache-Control: no-cache' \
+  -H 'DNT: 1' \
+  -H 'Upgrade-Insecure-Requests: 1' \
+  -H 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36' \
+  -H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9' \
+  -H 'Sec-Fetch-Site: none' \
+  -H 'Sec-Fetch-Mode: navigate' \
+  -H 'Sec-Fetch-User: ?1' \
+  -H 'Sec-Fetch-Dest: document' \
+  -H 'Accept-Language: ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7,de;q=0.6' \
+  -H 'Cookie: Memul%5FComplexNm=; Memul%5FComplexCd=; Memul%5FMemulType2=01; Memul%5FMemulStyle=0; ASPSESSIONIDCADCABAB=ACNPNLLBFKFGNIDIABFFLMKM; ACEUACS=1601380901620212205; ACEUCI2=1; _ga=GA1.2.796886702.1607175988; _gid=GA1.2.700095657.1607175988; ACEFCID=UID-5FCB8F33399F420C70EC39D1; ACEUCI=1; _fbp=fb.1.1607175988692.1088556853; nvtk=; foot_navi=opennavi; mapSize=downsize; Memul%5FTabGbn=0; __gads=ID=ae7729b33087d6ae-22d5ba9705c5007f:T=1607175999:RT=1607175999:S=ALNI_MZjFkEOKleX8PaaTOT8rDsOIx9hRw; Memul%5FCortarNo=4113000000; Memul%5FAddr=%EA%B2%BD%EA%B8%B0%EB%8F%84%7C%EC%84%B1%EB%82%A8%EC%8B%9C%7C%7C127%2E12651632305776%7C37%2E4199249073357; Memul%5FComplexCdPrev=; _ACS100397=6335; _ACU100397=1607176045601212205.1607176417626.1.0.2122056MXRPI5NZ8YRC.0.0.0.....; fCode=A; Memul%5FMemulType1=A01; _ACR0=09fa33842bf054d6ace4867b3b0fddfac8885215; wcs_bt=8c647232a98f8:1607179502; _ACU100396=1607175987216212205.1607179502751.1.0.212205MDTECN8BJWOBH.0.0.0.....; _ACS100396=3922' \
+  --compressed
+  
