@@ -176,28 +176,32 @@ def r114Best_parseList(pageContent="<html></html>", memul_length=0):
 
 if __name__ == "__main__":
 
-    #------------------------------------------------------------
-    #-------------------- CLI 를 통한 옵션 설정 --------------------
-    #------------------------------------------------------------
-
-    # 옵션 변수 초기화
+    # 크롤링 옵션 변수들
+    # csv 파일 절대경로
     csvPath = ''
+    # 크롤링할 페이지수
     maxPage = 0
 
-    # CLI 도움말 텍스트 작성
+    #-----------------------------------------------------
+    #-------------------- CLI 옵션 설정 --------------------
+    #-----------------------------------------------------
+
+    #-------------------- 도움말 출력 --------------------
     helpText = '''
     CLI Options
-
     -h      : print this help
-    -f      : absolute path to save result csv file (String)
+    -f      : absolute path of DIRECTORY to save a csv file. (String) 
+              [ Notice ] Do not include a file name.
+              [ Notice ] Do not include a non-existing subdirectory.
     -m      : a number of pages to crawl (Int)
     '''
-
     # -h 옵션이 있으면 도움말 덱스트 프린트
     if '-h' in argv:
         print(helpText)
         exit()
 
+
+    #-------------------- args 파싱 --------------------
     # 파일명을 제외한 argv 반복
     for i in range(1,len(argv)):
         # 옵션 플래그를 찾음, 바로 다음에 arg 가 있는지 검사 (try/catch) (옵션 플래그 없이 주어진 arg 는 무시)
@@ -219,7 +223,7 @@ if __name__ == "__main__":
                     if(argv[i] in ['-f','-m']):
                         # 옵션 플래그가 -f 이면, 패러미터를 csvPath 에 저장 (경로가 잘못된 경우는 file 모듈에서 예외처리해줄 것임)
                         if(argv[i] == '-f'):
-                            csvPath = argv[i+1]
+                            csvPath = Path.joinpath(Path(argv[i+1]), datetime.utcnow().strftime('%Y%m%d%H%M%S%f')[:-3]+'.csv')
                         # 옵션 플래그가 -m 이면, 패러미터를 int 파싱할수 있는지 검사 (try/catch), 가능하면 maxPage 에 저장.
                         if(argv[i] == '-m'):
                             try:
@@ -238,23 +242,23 @@ if __name__ == "__main__":
                 
 
 
-    #-------------------------------------------------------------------------
-    #-------------------- CLI 옵션이 없는 경우 기본 옵션으로 설정 --------------------
-    #-------------------------------------------------------------------------
+    #----------------------------------------------------------------------
+    #-------------------- CLI 옵션이 없는 경우 기본 옵션 설정 --------------------
+    #----------------------------------------------------------------------
 
     if(csvPath==''):
-        # csv 파일 경로를 만들어줍니다. (스크립트경로/r114SeongnamBest) 
-        if not Path.joinpath(Path.cwd(),'r114SeongnamBest').exists():
-            Path.mkdir(Path.joinpath(Path.cwd(),'r114SeongnamBest'))
+        # csv 파일이 저장될 디렉토리 mkdir. (스크립트경로/r114SeongnamBest) 
+        if not Path.joinpath(Path.cwd(),'result').exists():
+            Path.mkdir(Path.joinpath(Path.cwd(),'result'))
         
-        # 파일명은 milliseconds 3자리를 포함한 시간 스트링을 사용합니다.
+        # 파일명은 milliseconds 3자리를 포함한 시간 스트링을 사용.
         timeStamp = datetime.utcnow().strftime('%Y%m%d%H%M%S%f')[:-3]
         
         # 완성된 경로.
-        csvPath = Path.joinpath(Path.cwd(),'r114SeongnamBest',timeStamp+'.csv')
+        csvPath = Path.joinpath(Path.cwd(),'result',timeStamp+'.csv')
 
     if(maxPage==0):
-        # 파싱할 페이지수를 지정해줍니다.
+        # 파싱할 페이지수 지정.
         maxPage = 1
 
 
@@ -264,6 +268,7 @@ if __name__ == "__main__":
     #----------------------------------------------
 
     while True:
+
         #-------------------- 타이머 시작 --------------------
 
         timeStamp_start = datetime.utcnow()
@@ -274,9 +279,14 @@ if __name__ == "__main__":
         memul = []
 
         # maxPage 만큼 반복하며 요청+파싱.
-        for pageNumber in range(maxPage+1):
+        for pageNumber in range(1,maxPage+1):
+            print(pageNumber,'/',maxPage,'페이지 크롤링 중 ...')
             pageHTMLString = r114SeongnamBest_request(pageNumber)
             pageMemulList = r114Best_parseList(pageHTMLString, len(memul))
+            # 마지막 페이지 파싱이 끝난 경우, 반복 중단
+            if(pageMemulList == []):
+                print(pageNumber,'요청한 모든 페이지 크롤링 완료 !')
+                break
             memul += pageMemulList
 
         #-------------------- CSV 파일 쓰기 --------------------
@@ -294,7 +304,8 @@ if __name__ == "__main__":
         print(f'''
         웹사이트 주소: https://www.r114.com/?_c=memul&_m=p10&_a=index.ajax
         크롤링 결과 csv 경로: '{csvPath}'
-        크롤링한 총 페이지 수: {maxPage}
+        크롤링한 총 페이지 수: {maxPage} 페이지
+        클롤링한 총 매물 수: {len(memul)} 개
         소요 시간: {timeStamp_end.second - timeStamp_start.second}초
         시작 시간: {timeStamp_start.strftime('%Y년 %m월 %d일 %H시 %M분 %S초 %f')}
         완료 시간: {timeStamp_end.strftime('%Y년 %m월 %d일 %H시 %M분 %S초 %f')}    
