@@ -146,7 +146,7 @@ def r114Best_parseList(pageContent="<html></html>", memul_length=0):
             currentData = []
 
             # 매물 순위 (페이지 넘버가 2 이상인 경우를 위해, 기존 결과 리스트의 길이를 더해준다)
-            currentData.append(memul_length+j+1)
+            currentData.append(memul_length+j)
             # 각 데이터를 파싱.
             currentData.append(bs4_selectAndStrip(currentElement,list_selector['매물 이름']))
             currentData.append(bs4_selectAndStrip(currentElement,list_selector['거래 유형']))
