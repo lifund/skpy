@@ -14,9 +14,9 @@
 
 2. 실행 예 : CLI 로 다음과 같은 크롤링 옵션을 설정할 수 있습니다.
 
-   - ( example ) 아래 실행문은 1~3 페이지를 크롤링하여, 사용자가 설정한 디렉토리에 저장합니다.
+   - ( example ) 아래 실행문은 총 3 페이지를 크롤링하여, 사용자가 설정한 디렉토리에 저장합니다.
    ```bash
-   /path/to/python3 /path/to/main.py -m numberOfPages -f /path/to/save/csv/file/
+   /path/to/python3 /path/to/main.py -m 3 -f /path/to/save/csv/file/
    ```
 
    - -m : 크롤링할 총 페이지수 설정
