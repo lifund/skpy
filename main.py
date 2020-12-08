@@ -155,7 +155,7 @@ def r114Best_parseList(pageContent="<html></html>", memul_length=0):
             currentData.append(bs4_selectAndStrip(currentElement,list_selector['매물 가격']))
             currentData.append(bs4_selectAndStrip(currentElement,list_selector['업로드 날짜']))
             currentData.append(bs4_selectAndStrip(currentElement,list_selector['매물 종류']))
-            # 공백문자로 파싱하려했으나 구성이 규칙적이지 않아 그대로 둠. (예: 옥련자영빌라 301동의 경우, 방갯수가 없고, 면적/층수밖에 없음.)
+            # 방갯수/면적/층수가 붙어있는 스트링, 공백문자로 파싱하려했으나 구성이 규칙적이지 않아 그대로 둠. (예: 목련자영빌라 301동의 경우, 방갯수가 없고, 면적/층수밖에 없음.)
             currentData.append(bs4_selectAndStrip(currentElement,list_selector['매물 세부사항']))
             currentData.append(bs4_selectAndStrip(currentElement,list_selector['매물 설명']))
             # 해당 DOM 안의 불필요한 자식 엘리먼트를 제거.
