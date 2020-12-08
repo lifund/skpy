@@ -155,11 +155,8 @@ def r114Best_parseList(pageContent="<html></html>", memul_length=0):
             currentData.append(bs4_selectAndStrip(currentElement,list_selector['매물 가격']))
             currentData.append(bs4_selectAndStrip(currentElement,list_selector['업로드 날짜']))
             currentData.append(bs4_selectAndStrip(currentElement,list_selector['매물 종류']))
-            # 매물 세부사항이 1공백을 두고 붙어있는 스트링이라 분리해줌.
-            specs = bs4_selectAndStrip(currentElement,list_selector['매물 세부사항']).split(' ')
-            currentData.append(specs[0])
-            currentData.append(specs[1])
-            currentData.append(specs[2])
+            # 공백문자로 파싱하려했으나 구성이 규칙적이지 않아 그대로 둠. (예: 옥련자영빌라 301동의 경우, 방갯수가 없고, 면적/층수밖에 없음.)
+            currentData.append(bs4_selectAndStrip(currentElement,list_selector['매물 세부사항']))
             currentData.append(bs4_selectAndStrip(currentElement,list_selector['매물 설명']))
             # 해당 DOM 안의 불필요한 자식 엘리먼트를 제거.
             bs4_extractElement(currentElement,list_selector['매물 위치 타이틀'])
@@ -289,9 +286,7 @@ if __name__ == "__main__":
                 "가격",
                 "업로드 날짜",
                 "매물 유형",
-                "방 갯수",
-                "면적",
-                "층수",
+                "매물 세부사항 (방갯수/면적/층수)",
                 "상세 설명",
                 "위치"
             ]
